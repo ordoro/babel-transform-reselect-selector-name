@@ -1,16 +1,18 @@
 export default function ({Plugin, types: t}) {
+  function updateArgs(call, selectorName, state) {
+    call.arguments = [
+      t.stringLiteral(`${state.file.opts.sourceFileName}:${selectorName}`),,
+      ...call.arguments
+    ];
+  }
+
   return {
     visitor: {
       VariableDeclarator(path, state) {
-        if (!t.isCallExpression(path.node)) {
-          return;
-        }
-        if (path.node.init.callee.name === 'createSelector') {
-          const selectorName = path.node.id.name;
-          path.node.init.arguments = [
-            t.stringLiteral(`${state.file.opts.filename}:${selectorName}`),
-            ...path.node.init.arguments
-          ];
+        if (t.isCallExpression(path.node.init)) {
+          if (path.node.init.callee.name === 'createSelector') {
+            updateArgs(path.node.init, path.node.id.name, state);
+          }
         }
       },
 
@@ -19,10 +21,7 @@ export default function ({Plugin, types: t}) {
           return;
         }
         if (path.node.value.callee.name === 'createSelector') {
-          path.node.value.arguments = [
-            t.stringLiteral(`${state.file.opts.filename}:${path.node.key.name}`),
-            ...path.node.value.arguments
-          ];
+          updateArgs(path.node.value, path.node.key.name, state);
         }
       }
     }

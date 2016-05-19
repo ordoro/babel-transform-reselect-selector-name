@@ -1,6 +1,6 @@
 "use strict";
 
-var cartSelector = createSelector(function (state) {
+var cartSelector = createSelector("actual.js:cartSelector", function (state) {
   return state.data.carts;
 }, function (state) {
   return state.ui.settings.salesChannels.editID;
@@ -9,13 +9,13 @@ var cartSelector = createSelector(function (state) {
 });
 
 var mapStateToProps = createStructuredSelector({
-  id: createSelector(cartSelector, function (cart) {
+  id: createSelector("actual.js:id", cartSelector, function (cart) {
     return cart.id;
   }),
-  currentVendor: createSelector(cartSelector, function (cart) {
+  currentVendor: createSelector("actual.js:currentVendor", cartSelector, function (cart) {
     return cart.vendor;
   }),
-  authorizeMessage: createSelector(cartSelector, function (cart) {
+  authorizeMessage: createSelector("actual.js:authorizeMessage", cartSelector, function (cart) {
     return formatAuthorizeMessage(vendorActions[cart.vendor].name);
   }),
   isSubmitting: function isSubmitting(state) {

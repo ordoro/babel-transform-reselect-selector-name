@@ -14,7 +14,9 @@ describe('finds React components', () => {
     it(`should ${caseName.split('-').join(' ')}`, () => {
       const fixtureDir = path.join(fixturesDir, caseName);
       let actualPath = path.join(fixtureDir, 'actual.js');
-      const actual = transformFileSync(actualPath).code;
+      const actual = transformFileSync(actualPath, {
+        plugins: [plugin]
+      }).code;
 
       if (path.sep === '\\') {
         // Specific case of windows, transformFileSync return code with '/'
