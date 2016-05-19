@@ -14,6 +14,11 @@ export default function ({Plugin, types: t}) {
             updateArgs(path.node.init, path.node.id.name, state);
           }
         }
+        else if (t.isArrowFunctionExpression(path.node.init)) {
+          if (path.node.init.body.callee.name === 'createSelector') {
+            updateArgs(path.node.init.body, path.node.id.name, state);
+          }
+        }
       },
 
       ObjectProperty(path, state) {
