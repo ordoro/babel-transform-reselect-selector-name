@@ -2,8 +2,7 @@
 
 [experiment]
 
-Transform calls to `reselect` `createSelector` to call with `name` as the first argument.
+Transform calls to `reselect` `createSelector` to call with `name` as the first argument. Combine with a modified `reselect` library to debug `reselect` performance.
 
-Combine with a modified `reselect` library to debug `reselect` performance.
 
-http://astexplorer.net/#/10VeNUYnRw/7
+package.json and test structure mostly copypasta'd from https://github.com/gaearon/babel-plugin-react-transform.

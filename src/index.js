@@ -1,3 +1,7 @@
+require('babel-register')({
+  "presets": ["es2015"]
+});
+
 export default function ({Plugin, types: t}) {
   return {
     visitor: {
