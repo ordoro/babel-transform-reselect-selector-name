@@ -1,11 +1,10 @@
-require('babel-register')({
-  "presets": ["es2015"]
-});
-
 export default function ({Plugin, types: t}) {
   return {
     visitor: {
       VariableDeclarator(path, state) {
+        if (!t.isCallExpression(path.node)) {
+          return;
+        }
         if (path.node.init.callee.name === 'createSelector') {
           const selectorName = path.node.id.name;
           path.node.init.arguments = [
